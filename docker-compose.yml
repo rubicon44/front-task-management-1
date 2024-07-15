@@ -1,0 +1,13 @@
+version: '3'
+services:
+  front:
+    build: .
+    volumes:
+      - .:/front-task-management-1
+      - node_modules:/front-task-management-1/node_modules
+    ports:
+      - "3001:3000"
+    tty: true
+
+volumes:
+  node_modules:
