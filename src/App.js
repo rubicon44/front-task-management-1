@@ -15,6 +15,10 @@ const App = () => {
       <Routes>
         <Route element={<PageLayout />}>
           <Route
+            path="/users/:id"
+            element={<User />}
+          />
+          <Route
             path="/auth/signin"
             element={<SignIn />}
           />
