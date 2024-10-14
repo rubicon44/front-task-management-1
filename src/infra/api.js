@@ -33,3 +33,61 @@ export const getUsers = async () =>
     method: "get",
     url: "/users",
   }).then((response) => camelcaseKeys(response, { deep: true }));
+
+// projects
+export const postProject = async (params) =>
+  axios.post("/projects", snakecaseKeys(params));
+
+export const getProject = async (params) =>
+  axios({
+    method: "get",
+    url: `/projects/${params}`,
+  }).then((response) => camelcaseKeys(response, { deep: true }));
+
+export const updateProject = async (params, data) =>
+  axios({
+    method: "put",
+    url: `/projects/${params}`,
+    data: snakecaseKeys(data),
+  }).then((response) => camelcaseKeys(response, { deep: true }));
+
+export const deleteProject = async (params) =>
+  axios({
+    method: "delete",
+    url: `/projects/${params}`,
+  });
+
+export const getProjects = async () =>
+  axios({
+    method: "get",
+    url: "/projects",
+  }).then((response) => camelcaseKeys(response, { deep: true }));
+
+// tasks
+export const postTask = async (params) =>
+  axios.post("/tasks", snakecaseKeys(params));
+
+export const getTask = async (params) =>
+  axios({
+    method: "get",
+    url: `/tasks/${params}`,
+  }).then((response) => camelcaseKeys(response, { deep: true }));
+
+export const updateTask = async (params, data) =>
+  axios({
+    method: "put",
+    url: `/tasks/${params}`,
+    data: snakecaseKeys(data),
+  }).then((response) => camelcaseKeys(response, { deep: true }));
+
+export const deleteTask = async (params) =>
+  axios({
+    method: "delete",
+    url: `/tasks/${params}`,
+  });
+
+export const getTasks = async () =>
+  axios({
+    method: "get",
+    url: "/tasks",
+  }).then((response) => camelcaseKeys(response, { deep: true }));
