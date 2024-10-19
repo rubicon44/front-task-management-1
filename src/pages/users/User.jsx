@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getUser, deleteUser } from "src/infra/api";
 
 export const User = () => {
-  const { id } = useParams();
+  const { userId } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -11,7 +11,7 @@ export const User = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await getUser(id);
+      const response = await getUser(userId);
       const userData = response.data;
       setUser(userData);
       setLoading(false);
@@ -24,7 +24,7 @@ export const User = () => {
   const handleDelete = async () => {
     setLoading(true);
     try {
-      await deleteUser(id);
+      await deleteUser(userId);
       navigate("/");
     } catch (error) {
       setError(error);
@@ -34,7 +34,7 @@ export const User = () => {
 
   useEffect(() => {
     fetchUserData();
-  }, [id]);
+  }, [userId]);
 
   return (
     <div>
@@ -48,7 +48,7 @@ export const User = () => {
           <p>Username: {user.username}</p>
           <p>Nickname: {user.nickname}</p>
           <p>Email: {user.email}</p>
-          <button onClick={() => navigate(`/users/${id}/edit`)}>編集</button>
+          <button onClick={() => navigate(`/users/${userId}/edit`)}>編集</button>
           <button onClick={handleDelete}>削除</button>
         </div>
       ) : (
@@ -57,7 +57,3 @@ export const User = () => {
     </div>
   );
 };
-
-{/* <p>Username: テストユーザー</p>
-<p>Nickname: テストニックネーム</p>
-<p>Email: test@email.com</p> */}

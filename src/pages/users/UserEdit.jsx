@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getUser, updateUser } from 'src/infra/api';
 
 export const UserEdit = () => {
-  const { id } = useParams();
+  const { userId } = useParams();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [nickname, setNickname] = useState("");
@@ -12,7 +12,7 @@ export const UserEdit = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await getUser(id);
+      const response = await getUser(userId);
       const userData = response.data;
       setUsername(userData.username);
       setNickname(userData.nickname);
@@ -25,7 +25,7 @@ export const UserEdit = () => {
 
   useEffect(() => {
     fetchUserData();
-  }, [id]);
+  }, [userId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,8 +36,8 @@ export const UserEdit = () => {
         nickname,
       };
 
-      await updateUser(id, updatedUserData);
-      navigate(`/users/${id}`);
+      await updateUser(userId, updatedUserData);
+      navigate(`/users/${userId}`);
     } catch (error) {
       setError(error);
       setLoading(false);
