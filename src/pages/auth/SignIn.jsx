@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signIn } from 'src/infra/api';
+import { PageHeader } from 'src/components/Header/PageHeader';
 
 export const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -41,6 +42,7 @@ export const SignIn = () => {
 
   return (
     <>
+      <PageHeader title="ログイン" />
       <h2>ログイン</h2>
       <form onSubmit={handleSubmit}>
         <div>
