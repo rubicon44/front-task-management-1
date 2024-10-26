@@ -26,7 +26,7 @@ export const Project = () => {
     setLoading(true);
     try {
       await deleteProject(userId, projectId);
-      navigate("/projects");
+      navigate(`/users/${userId}/projects`);
     } catch (error) {
       setError(error);
       setLoading(false);
@@ -49,7 +49,7 @@ export const Project = () => {
         <div>
           <p>Project Name: {project.name}</p>
           <p>Description: {project.description}</p>
-          <button onClick={() => navigate(`/projects/${projectId}/edit`)}>編集</button>
+          <button onClick={() => navigate(`/users/${userId}/projects/${projectId}/edit`)}>編集</button>
           <button onClick={handleDelete}>削除</button>
         </div>
       ) : (

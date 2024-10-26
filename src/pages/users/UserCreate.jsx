@@ -29,8 +29,9 @@ export const UserCreate = () => {
 
   const postUserFunc = async (user) => {
     try {
-      await postUser(user);
-      navigateToUsers("/");
+      const response = await postUser(user);
+      const createdUserId = response.data.id;
+      navigateToUsers(`/users/${createdUserId}`);
     } catch (error) {
       console.log(error);
     }
@@ -48,6 +49,7 @@ export const UserCreate = () => {
 
     await postUserFunc(newUser);
 
+    // フォームのリセット
     setUsername('');
     setNickname('');
     setEmail('');

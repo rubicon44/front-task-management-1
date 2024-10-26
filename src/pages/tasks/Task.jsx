@@ -26,7 +26,7 @@ export const Task = () => {
     setLoading(true);
     try {
       await deleteTask(userId, projectId, taskId);
-      navigate("/tasks");
+      navigate(`/users/${userId}/projects/${projectId}`);
     } catch (error) {
       setError(error);
       setLoading(false);
@@ -52,7 +52,7 @@ export const Task = () => {
           <p>Status: {task.status}</p>
           <p>Start Date: {task.startDate}</p>
           <p>End Date: {task.endDate}</p>
-          <button onClick={() => navigate(`/tasks/${taskId}/edit`)}>編集</button>
+          <button onClick={() => navigate(`users/${userId}/projects/${projectId}/tasks/${taskId}/edit`)}>編集</button>
           <button onClick={handleDelete}>削除</button>
         </div>
       ) : (

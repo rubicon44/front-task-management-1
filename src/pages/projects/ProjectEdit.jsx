@@ -37,7 +37,7 @@ export const ProjectEdit = () => {
         description,
       };
       await updateProject(userId, projectId, updatedProjectData);
-      navigate(`/projects/${projectId}`);
+      navigate(`/users/${userId}/projects/${projectId}`);
     } catch (error) {
       setError(error);
       setLoading(false);

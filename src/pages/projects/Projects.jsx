@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { getProjects } from "src/infra/api";
 import { PageHeader } from 'src/components/Header/PageHeader';
 
@@ -35,7 +35,11 @@ export const Projects = () => {
       ) : projects.length > 0 ? (
         <ul>
           {projects.map((project) => (
-            <li key={project.id}>{project.name}</li>
+            <li key={project.id}>
+              <Link to={`/users/${userId}/projects/${project.id}`}>
+                {project.name}
+              </Link>
+            </li>
           ))}
         </ul>
       ) : (

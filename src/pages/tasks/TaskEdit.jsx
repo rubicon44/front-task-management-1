@@ -38,7 +38,7 @@ export const TaskEdit = () => {
     setLoading(true);
     try {
       await updateTask(userId, projectId, taskId, taskData);
-      navigate("/tasks");
+      navigate(`/users/${userId}/projects/${projectId}/tasks/${taskId}`);
     } catch (error) {
       setError(error);
       setLoading(false);

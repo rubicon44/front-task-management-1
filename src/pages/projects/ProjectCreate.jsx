@@ -27,7 +27,7 @@ export const ProjectCreate = () => {
     };
     try {
       await postProject(userId, newProjectData);
-      navigate("/projects");
+      navigate(`/users/${userId}/projects`);
     } catch (error) {
       console.log(error);
     }

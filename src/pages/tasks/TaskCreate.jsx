@@ -27,7 +27,7 @@ export const TaskCreate = () => {
     setLoading(true);
     try {
       await postTask(userId, projectId, taskData);
-      navigate("/tasks");
+      navigate(`/users/${userId}/projects/${projectId}`);
     } catch (error) {
       setError(error);
       setLoading(false);
