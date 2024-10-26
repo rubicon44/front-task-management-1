@@ -3,6 +3,19 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getTask, deleteTask } from "src/infra/api";
 import { PageHeader } from 'src/components/Header/PageHeader';
 
+const getStatusLabel = (status) => {
+  switch (status) {
+    case 0:
+      return '未対応';
+    case 1:
+      return '処理中';
+    case 2:
+      return '完了';
+    default:
+      return 'Unknown';
+  }
+};
+
 export const Task = () => {
   const { userId, projectId, taskId } = useParams();
   const navigate = useNavigate();
@@ -49,10 +62,10 @@ export const Task = () => {
         <div>
           <p>Task Title: {task.title}</p>
           <p>Content: {task.content}</p>
-          <p>Status: {task.status}</p>
+          <p>Status: {getStatusLabel(task.status)}</p>
           <p>Start Date: {task.startDate}</p>
           <p>End Date: {task.endDate}</p>
-          <button onClick={() => navigate(`users/${userId}/projects/${projectId}/tasks/${taskId}/edit`)}>編集</button>
+          <button onClick={() => navigate(`/users/${userId}/projects/${projectId}/tasks/${taskId}/edit`)}>編集</button>
           <button onClick={handleDelete}>削除</button>
         </div>
       ) : (

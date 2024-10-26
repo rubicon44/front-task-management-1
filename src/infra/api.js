@@ -9,23 +9,23 @@ axios.defaults.headers.common["Content-Type"] = "application/json";
 export const postUser = async (params) =>
   axios.post("/users", snakecaseKeys(params));
 
-export const getUser = async (params) =>
+export const getUser = async (userId) =>
   axios({
     method: "get",
-    url: `/users/${params}`,
+    url: `/users/${userId}`,
   }).then((response) => camelcaseKeys(response, { deep: true }));
 
-export const updateUser = async (params, data) =>
+export const updateUser = async (userId, data) =>
   axios({
     method: "put",
-    url: `/users/${params}`,
+    url: `/users/${userId}`,
     data: snakecaseKeys(data),
   }).then((response) => camelcaseKeys(response, { deep: true }));
 
-export const deleteUser = async (params) =>
+export const deleteUser = async (userId) =>
   axios({
     method: "delete",
-    url: `/users/${params}`,
+    url: `/users/${userId}`,
   });
 
 export const getUsers = async () =>

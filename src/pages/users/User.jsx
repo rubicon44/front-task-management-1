@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getUser, deleteUser } from "src/infra/api";
+import { PageHeader } from 'src/components/Header/PageHeader';
 
 export const User = () => {
   const { userId } = useParams();
@@ -38,6 +39,7 @@ export const User = () => {
 
   return (
     <div>
+      <PageHeader title="ユーザー詳細" />
       <h2>ユーザー詳細</h2>
       {loading ? (
         <p>Loading...</p>

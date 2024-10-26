@@ -12,7 +12,6 @@ export const TaskEdit = () => {
     status: "",
     startDate: "",
     endDate: "",
-    projectId: "",
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -86,9 +85,9 @@ export const TaskEdit = () => {
               required
             >
               <option value="">-- Select Status --</option>
-              <option value="0">Not Started</option>
-              <option value="1">In Progress</option>
-              <option value="2">Completed</option>
+              <option value="0">未対応</option>
+              <option value="1">処理中</option>
+              <option value="2">完了</option>
             </select>
           </div>
           <div>
@@ -111,16 +110,7 @@ export const TaskEdit = () => {
               required
             />
           </div>
-          <div>
-            <label>Project ID:</label>
-            <input
-              type="text"
-              name="projectId"
-              value={taskData.projectId}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <input type="hidden" name="projectId" value={projectId} />
           <button type="submit">更新</button>
         </form>
       )}

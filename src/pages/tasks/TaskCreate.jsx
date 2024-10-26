@@ -12,7 +12,8 @@ export const TaskCreate = () => {
     status: "",
     startDate: "",
     endDate: "",
-    projectId: "",
+    userId: userId,
+    projectId: projectId,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -71,9 +72,9 @@ export const TaskCreate = () => {
               required
             >
               <option value="">-- Select Status --</option>
-              <option value="0">Not Started</option>
-              <option value="1">In Progress</option>
-              <option value="2">Completed</option>
+              <option value="0">未対応</option>
+              <option value="1">処理中</option>
+              <option value="2">完了</option>
             </select>
           </div>
           <div>
@@ -96,16 +97,7 @@ export const TaskCreate = () => {
               required
             />
           </div>
-          <div>
-            <label>Project ID:</label>
-            <input
-              type="text"
-              name="projectId"
-              value={taskData.projectId}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <input type="hidden" name="projectId" value={taskData.projectId} />
           <button type="submit">作成</button>
         </form>
       )}
