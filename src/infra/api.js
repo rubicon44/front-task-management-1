@@ -4,6 +4,7 @@ import snakecaseKeys from "snakecase-keys";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.headers.common["Content-Type"] = "application/json";
+axios.defaults.withCredentials = true;
 
 // users
 export const postUser = async (params) =>
