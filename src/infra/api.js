@@ -7,13 +7,27 @@ axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.withCredentials = true;
 
 // users
-export const postUser = async (params) =>
-  axios.post("/users", snakecaseKeys(params));
+export const postUser = async (params, idToken) => {
+  try {
+    const response = await axios.post("/users", snakecaseKeys(params), {
+      headers: {
+        Authorization: idToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating user:", error);
+    throw error;
+  }
+};
 
-export const getUser = async (userId) =>
+export const getUser = async (userId, idToken) =>
   axios({
     method: "get",
     url: `/users/${userId}`,
+    headers: {
+      Authorization: idToken,
+    },
   }).then((response) => camelcaseKeys(response, { deep: true }));
 
 export const updateUser = async (userId, data) =>

@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import { postUser } from 'src/infra/api';
 import { PageHeader } from 'src/components/Header/PageHeader';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from 'src/infra/firebase';
 
 export const UserCreate = () => {
   const [username, setUsername] = useState('');
@@ -27,10 +30,12 @@ export const UserCreate = () => {
     setPassword(e.target.value);
   };
 
-  const postUserFunc = async (user) => {
+  const postUserFunc = async (user, idToken) => {
     try {
-      const response = await postUser(user);
-      const createdUserId = response.data.id;
+      const response = await postUser(user, idToken);
+      const jwt = response.token;
+      Cookies.set('jwt', jwt)
+      const createdUserId = response.user.id;
       navigateToUsers(`/users/${createdUserId}`);
     } catch (error) {
       console.log(error);
@@ -40,20 +45,28 @@ export const UserCreate = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newUser = {
-      username: username,
-      nickname: nickname,
-      email: email,
-      password: password,
-    };
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const firebaseUser = userCredential.user;
 
-    await postUserFunc(newUser);
+      const newUser = {
+        username: username,
+        nickname: nickname,
+        email: email,
+        firebaseId: firebaseUser.uid,
+      };
 
-    // フォームのリセット
-    setUsername('');
-    setNickname('');
-    setEmail('');
-    setPassword('');
+      const { currentUser } = auth;
+      const idToken = await currentUser.getIdToken(/* forceRefresh */ true);
+
+      await postUserFunc(newUser, idToken);
+      setUsername('');
+      setNickname('');
+      setEmail('');
+      setPassword('');
+    } catch (error) {
+      console.log("Firebase user creation error:", error);
+    }
   };
 
   return (
@@ -71,11 +84,11 @@ export const UserCreate = () => {
         </div>
         <div>
           <label>Email:</label>
-          <input type="text" value={email} onChange={handleEmailChange} required />
+          <input type="email" value={email} onChange={handleEmailChange} required />
         </div>
         <div>
           <label>Password:</label>
-          <input type="text" value={password} onChange={handlePasswordChange} required />
+          <input type="password" value={password} onChange={handlePasswordChange} required />
         </div>
         <button type="submit">作成</button>
       </form>

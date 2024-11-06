@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 import { getUser, deleteUser } from "src/infra/api";
 import { PageHeader } from 'src/components/Header/PageHeader';
 
@@ -12,7 +13,8 @@ export const User = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await getUser(userId);
+      const jwt = Cookies.get('jwt');
+      const response = await getUser(userId, jwt);
       const userData = response.data;
       setUser(userData);
       setLoading(false);
