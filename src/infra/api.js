@@ -6,6 +6,21 @@ axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.withCredentials = true;
 
+// auth
+export const signIn = async (params, idToken) => {
+  try {
+    const response = await axios.post("/auth/sign_in", snakecaseKeys(params), {
+      headers: {
+        Authorization: idToken,
+      },
+    });
+    return camelcaseKeys(response.data, { deep: true });
+  } catch (error) {
+    console.error("Error signing in:", error);
+    throw error;
+  }
+};
+
 // users
 export const postUser = async (params, idToken) => {
   try {
