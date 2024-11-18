@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import Cookies from 'js-cookie';
 import { getProjects } from "src/infra/api";
 import { PageHeader } from 'src/components/Header/PageHeader';
 
@@ -11,7 +12,8 @@ export const Projects = () => {
 
   const fetchProjects = async () => {
     try {
-      const response = await getProjects(userId);
+      const jwt = Cookies.get('jwt');
+      const response = await getProjects(userId, jwt);
       setProjects(response.data);
       setLoading(false);
     } catch (error) {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 import { getTask, deleteTask } from "src/infra/api";
 import { PageHeader } from 'src/components/Header/PageHeader';
 
@@ -25,7 +26,8 @@ export const Task = () => {
 
   const fetchTaskData = async () => {
     try {
-      const response = await getTask(userId, projectId, taskId);
+      const jwt = Cookies.get('jwt');
+      const response = await getTask(userId, projectId, taskId, jwt);
       const taskData = response.data;
       setTask(taskData);
       setLoading(false);
@@ -38,7 +40,8 @@ export const Task = () => {
   const handleDelete = async () => {
     setLoading(true);
     try {
-      await deleteTask(userId, projectId, taskId);
+      const jwt = Cookies.get('jwt');
+      await deleteTask(userId, projectId, taskId, jwt);
       navigate(`/users/${userId}/projects/${projectId}`);
     } catch (error) {
       setError(error);

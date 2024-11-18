@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 import { postProject } from "src/infra/api";
 import { PageHeader } from "src/components/Header/PageHeader";
 
@@ -26,7 +27,8 @@ export const ProjectCreate = () => {
       userId
     };
     try {
-      await postProject(userId, newProjectData);
+      const jwt = Cookies.get('jwt');
+      await postProject(userId, newProjectData, jwt);
       navigate(`/users/${userId}/projects`);
     } catch (error) {
       console.log(error);

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 import { getTask, updateTask } from "src/infra/api";
 import { PageHeader } from 'src/components/Header/PageHeader';
 
@@ -18,7 +19,8 @@ export const TaskEdit = () => {
 
   const fetchTaskData = async () => {
     try {
-      const response = await getTask(userId, projectId, taskId);
+      const jwt = Cookies.get('jwt');
+      const response = await getTask(userId, projectId, taskId, jwt);
       setTaskData(response.data);
       setLoading(false);
     } catch (error) {
@@ -36,7 +38,8 @@ export const TaskEdit = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await updateTask(userId, projectId, taskId, taskData);
+      const jwt = Cookies.get('jwt');
+      await updateTask(userId, projectId, taskId, taskData, jwt);
       navigate(`/users/${userId}/projects/${projectId}/tasks/${taskId}`);
     } catch (error) {
       setError(error);

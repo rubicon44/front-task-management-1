@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 import { postTask } from "src/infra/api";
 import { PageHeader } from 'src/components/Header/PageHeader';
 
@@ -27,7 +28,8 @@ export const TaskCreate = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await postTask(userId, projectId, taskData);
+      const jwt = Cookies.get('jwt');
+      await postTask(userId, projectId, taskData, jwt);
       navigate(`/users/${userId}/projects/${projectId}`);
     } catch (error) {
       setError(error);

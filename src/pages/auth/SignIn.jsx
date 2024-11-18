@@ -24,9 +24,12 @@ export const SignIn = () => {
     try {
       const response = await signIn(user, idToken);
       const jwt = response.token;
-      Cookies.set('jwt', jwt)
+      const userId = response.userId;
 
-      navigateToUsers("/");
+      Cookies.set('jwt', jwt)
+      Cookies.set('userId', userId);
+
+      navigateToUsers(`/users/${userId}`);
     } catch (error) {
       console.log(error);
     }

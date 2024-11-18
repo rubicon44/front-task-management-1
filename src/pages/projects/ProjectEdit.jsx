@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 import { getProject, updateProject } from "src/infra/api";
 import { PageHeader } from 'src/components/Header/PageHeader';
 
@@ -13,7 +14,8 @@ export const ProjectEdit = () => {
 
   const fetchProjectData = async () => {
     try {
-      const response = await getProject(userId, projectId);
+      const jwt = Cookies.get('jwt');
+      const response = await getProject(userId, projectId, jwt);
       const projectData = response.data;
       setName(projectData.name);
       setDescription(projectData.description);
@@ -36,7 +38,8 @@ export const ProjectEdit = () => {
         name,
         description,
       };
-      await updateProject(userId, projectId, updatedProjectData);
+      const jwt = Cookies.get('jwt');
+      await updateProject(userId, projectId, updatedProjectData, jwt);
       navigate(`/users/${userId}/projects/${projectId}`);
     } catch (error) {
       setError(error);

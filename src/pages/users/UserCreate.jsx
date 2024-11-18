@@ -34,8 +34,11 @@ export const UserCreate = () => {
     try {
       const response = await postUser(user, idToken);
       const jwt = response.token;
-      Cookies.set('jwt', jwt)
       const createdUserId = response.user.id;
+
+      Cookies.set('jwt', jwt);
+      Cookies.set('userId', createdUserId);
+
       navigateToUsers(`/users/${createdUserId}`);
     } catch (error) {
       console.log(error);
